@@ -1,0 +1,136 @@
+#----------------------------------------------------------------------------
+#       Macros
+#----------------------------------------------------------------------------
+CC            = gcc
+CXX           = g++
+LD            = $(CXX) $(CCFLAGS) $(CPPFLAGS)
+AR            = ar
+PICFLAGS      = -fPIC
+CPPFLAGS      = $(PICFLAGS) $(GENFLAGS) -g -std=c++11 -D_REENTRANT
+OBJEXT        = .o
+OUTPUT_OPTION = -o "$@"
+COMPILE.c     = $(CC) $(CFLAGS) $(CPPFLAGS) -c
+COMPILE.cc    = $(CXX) $(CCFLAGS) $(CPPFLAGS) -c
+LDFLAGS       = -L"."
+CCC           = $(CXX)
+MAKEFILE      = Makefile.assignment4
+DEPENDENCIES  = .depend.$(MAKEFILE)
+BTARGETDIR    = ./
+BIN           = $(BTARGETDIR)assignment4$(EXESUFFIX)$(EXEEXT)
+CAT           = cat
+MV            = mv -f
+RM            = rm -rf
+CP            = cp -p
+NUL           = /dev/null
+MKDIR         = mkdir -p
+TESTDIRSTART  = test -d
+TESTDIREND    = ||
+TOUCH         = touch
+EXEEXT        = 
+LIBPREFIX     = lib
+LIBSUFFIX     = 
+GENFLAGS      = -O
+LDLIBS        = -ldl $(subst lib,-l,$(sort $(basename $(notdir $(wildcard /usr/lib/librt.so /lib/librt.so))))) -lpthread
+OBJS          = driver$(OBJEXT) Factory/Expr_Command_Factory$(OBJEXT) Factory/Stack_Command_Factory$(OBJEXT) Commands/Add_Command$(OBJEXT) Commands/Binary_Op_Command$(OBJEXT) Commands/Divide_Command$(OBJEXT) Commands/Modulus_Command$(OBJEXT) Commands/Multiply_Command$(OBJEXT) Commands/Number_Command$(OBJEXT) Commands/Subtract_Command$(OBJEXT) Node_Commands/Add_Node$(OBJEXT) Node_Commands/Binary_Node$(OBJEXT) Node_Commands/Divide_Node$(OBJEXT) Node_Commands/Eval_Expr_Tree$(OBJEXT) Node_Commands/Expr_Builder$(OBJEXT) Node_Commands/Expr_Node$(OBJEXT) Node_Commands/Expr_Node_Visitor$(OBJEXT) Node_Commands/Expr_Tree_Builder$(OBJEXT) Node_Commands/Modulo_Node$(OBJEXT) Node_Commands/Multiply_Node$(OBJEXT) Node_Commands/Number_Node$(OBJEXT) Node_Commands/Subtract_Node$(OBJEXT)
+SRC           = driver.cpp Factory/Expr_Command_Factory.cpp Factory/Stack_Command_Factory.cpp Commands/Add_Command.cpp Commands/Binary_Op_Command.cpp Commands/Divide_Command.cpp Commands/Modulus_Command.cpp Commands/Multiply_Command.cpp Commands/Number_Command.cpp Commands/Subtract_Command.cpp Node_Commands/Add_Node.cpp Node_Commands/Binary_Node.cpp Node_Commands/Divide_Node.cpp Node_Commands/Eval_Expr_Tree.cpp Node_Commands/Expr_Builder.cpp Node_Commands/Expr_Node.cpp Node_Commands/Expr_Node_Visitor.cpp Node_Commands/Expr_Tree_Builder.cpp Node_Commands/Modulo_Node.cpp Node_Commands/Multiply_Node.cpp Node_Commands/Number_Node.cpp Node_Commands/Subtract_Node.cpp
+LINK.cc       = $(LD) $(LDFLAGS)
+EXPORTFLAGS   = 
+DEPLIBS       = $(foreach lib, , $(foreach libpath, ., $(wildcard $(libpath)/lib$(lib).a)))
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+all: $(BIN)
+
+$(BIN): $(OBJS) $(DEPLIBS)
+	@$(TESTDIRSTART) "$(BTARGETDIR)" $(TESTDIREND) $(MKDIR) "$(BTARGETDIR)"
+	$(LINK.cc) $(OBJS) $(LDLIBS) $(OUTPUT_OPTION)
+
+generated: $(GENERATED_DIRTY)
+	@-:
+
+driver$(OBJEXT): driver.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) driver.cpp
+
+Factory/Expr_Command_Factory$(OBJEXT): Factory/Expr_Command_Factory.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Factory/Expr_Command_Factory.cpp
+
+Factory/Stack_Command_Factory$(OBJEXT): Factory/Stack_Command_Factory.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Factory/Stack_Command_Factory.cpp
+
+Commands/Add_Command$(OBJEXT): Commands/Add_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Commands/Add_Command.cpp
+
+Commands/Binary_Op_Command$(OBJEXT): Commands/Binary_Op_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Commands/Binary_Op_Command.cpp
+
+Commands/Divide_Command$(OBJEXT): Commands/Divide_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Commands/Divide_Command.cpp
+
+Commands/Modulus_Command$(OBJEXT): Commands/Modulus_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Commands/Modulus_Command.cpp
+
+Commands/Multiply_Command$(OBJEXT): Commands/Multiply_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Commands/Multiply_Command.cpp
+
+Commands/Number_Command$(OBJEXT): Commands/Number_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Commands/Number_Command.cpp
+
+Commands/Subtract_Command$(OBJEXT): Commands/Subtract_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Commands/Subtract_Command.cpp
+
+Node_Commands/Add_Node$(OBJEXT): Node_Commands/Add_Node.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Node_Commands/Add_Node.cpp
+
+Node_Commands/Binary_Node$(OBJEXT): Node_Commands/Binary_Node.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Node_Commands/Binary_Node.cpp
+
+Node_Commands/Divide_Node$(OBJEXT): Node_Commands/Divide_Node.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Node_Commands/Divide_Node.cpp
+
+Node_Commands/Eval_Expr_Tree$(OBJEXT): Node_Commands/Eval_Expr_Tree.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Node_Commands/Eval_Expr_Tree.cpp
+
+Node_Commands/Expr_Builder$(OBJEXT): Node_Commands/Expr_Builder.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Node_Commands/Expr_Builder.cpp
+
+Node_Commands/Expr_Node$(OBJEXT): Node_Commands/Expr_Node.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Node_Commands/Expr_Node.cpp
+
+Node_Commands/Expr_Node_Visitor$(OBJEXT): Node_Commands/Expr_Node_Visitor.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Node_Commands/Expr_Node_Visitor.cpp
+
+Node_Commands/Expr_Tree_Builder$(OBJEXT): Node_Commands/Expr_Tree_Builder.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Node_Commands/Expr_Tree_Builder.cpp
+
+Node_Commands/Modulo_Node$(OBJEXT): Node_Commands/Modulo_Node.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Node_Commands/Modulo_Node.cpp
+
+Node_Commands/Multiply_Node$(OBJEXT): Node_Commands/Multiply_Node.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Node_Commands/Multiply_Node.cpp
+
+Node_Commands/Number_Node$(OBJEXT): Node_Commands/Number_Node.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Node_Commands/Number_Node.cpp
+
+Node_Commands/Subtract_Node$(OBJEXT): Node_Commands/Subtract_Node.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Node_Commands/Subtract_Node.cpp
+
+clean:
+	-$(RM) $(OBJS)
+
+realclean: clean
+	-$(RM) $(BIN)
+
+check-syntax:
+	$(COMPILE.cc) $(EXPORTFLAGS) -Wall -Wextra -pedantic -fsyntax-only $(CHK_SOURCES)
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
+
+
+depend:
+	-$(MPC_ROOT)/depgen.pl  $(CFLAGS) $(CCFLAGS) $(CPPFLAGS) -f $(DEPENDENCIES) $(SRC) 2> $(NUL)
+
+-include $(DEPENDENCIES)
